@@ -15,6 +15,7 @@ namespace WebApiExtAuth.Api
       WebApiConfig.Register(config);
       OAuthConfig.Configure(app);
 
+      app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
       app.UseWebApi(config);
     }
   }

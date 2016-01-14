@@ -5,10 +5,12 @@ namespace WebApiExtAuth.Api.Data
 {
   public class InMemoryAuthRepository
   {
+    private const string DefaultUser = "jhondoe";
+    
     public static readonly ConcurrentDictionary<string, User> Users = new ConcurrentDictionary<string, User>(new Dictionary<string, User>() {
-      {"ciccio", new User() {
-        UserName = "ciccio",
-        Password = "ciccio"
+      {DefaultUser, new User() {
+        UserName = DefaultUser,
+        Password = DefaultUser
       }}
     });
 
