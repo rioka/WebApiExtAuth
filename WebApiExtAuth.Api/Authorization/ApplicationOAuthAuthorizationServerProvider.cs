@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Cors;
 using Microsoft.Owin.Security.OAuth;
 using WebApiExtAuth.Api.Data;
 
@@ -21,6 +22,14 @@ namespace WebApiExtAuth.Api.Authorization
     /// <returns></returns>
     public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
     {
+      // This statement allows Cors for the token middleware provider only
+      // Still need to enable Cors for webapi installing package and calling 
+      // app.UseCors(...)
+      // IE may not set Origin in certain circumstances
+      context.OwinContext.Response.Headers.Add(CorsConstants.AccessControlAllowOrigin, new[] {
+        "*"
+      });
+
       var user = (new InMemoryAuthRepository()).Find(context.UserName, context.Password);
       if (user == null)
       {
