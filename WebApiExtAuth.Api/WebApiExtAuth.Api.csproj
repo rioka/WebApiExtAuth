@@ -108,6 +108,8 @@
   <ItemGroup>
     <Compile Include="Authorization\ApplicationOAuthAuthorizationServerProvider.cs" />
     <Compile Include="Controllers\SamplesController.cs" />
+    <Compile Include="Data\User.cs" />
+    <Compile Include="Data\InMemoryAuthRepository.cs" />
     <Compile Include="OAuthConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

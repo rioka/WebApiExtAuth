@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using WebApiExtAuth.Api.Data;
 
 namespace WebApiExtAuth.Api.Authorization
 {
@@ -19,18 +14,23 @@ namespace WebApiExtAuth.Api.Authorization
       await Task.FromResult(context.Validated());
     }
 
+    /// <summary>
+    /// Vdalidate credential and generate a token
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
     {
-      if (context.UserName != context.Password)
+      var user = (new InMemoryAuthRepository()).Find(context.UserName, context.Password);
+      if (user == null)
       {
         context.SetError("invalid_grant", "The user name or password is incorrect.");
       }
       else
       {
         var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-        identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+        identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
         identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
-        identity.AddClaim(new Claim("sub", context.UserName));
 
         context.Validated(identity);
       }

@@ -17,10 +17,10 @@ namespace WebApiExtAuth.Api
         AllowInsecureHttp = true
       };
 
-      // Authorize users via username/password
+      // Authorize users via username/password and generate a token
       app.UseOAuthAuthorizationServer(oAuthOptions);
 
-      // Authorize users via username/password
+      // Authorize users via username/password parsing the token
       app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
     }
   }
