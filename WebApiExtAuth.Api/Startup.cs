@@ -13,6 +13,7 @@ namespace WebApiExtAuth.Api
     {
       var config = new HttpConfiguration();
       WebApiConfig.Register(config);
+      OAuthConfig.Configure(app);
 
       app.UseWebApi(config);
     }
